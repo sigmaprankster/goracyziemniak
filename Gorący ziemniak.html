@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gorący ziemniak</title>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#ffd23f;--ink:#1a1a1a;--red:#ff3d2e;--g:#2ec27e;--w:#fffdf5}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--y);color:var(--ink);font-family:"Baloo 2","Trebuchet MS",Arial,sans-serif;font-weight:600;font-size:1.1rem}
+h1,h2,.lil,button{font-family:"Lilita One","Arial Black",Impact,sans-serif;font-weight:400}
+.scr{min-height:100vh;max-width:640px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) 18px 40px;display:flex;flex-direction:column}
+.hide{display:none!important}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+h2{font-size:clamp(1.8rem,7vw,2.5rem);margin:0;letter-spacing:.5px}
+.btn{border:3px solid var(--ink);border-radius:16px;background:var(--w);color:var(--ink);font-size:1.4rem;padding:12px 22px;cursor:pointer;box-shadow:5px 5px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
+.btn.red{background:var(--red);color:#fff}.btn.green{background:var(--g)}.btn.dark{background:var(--ink);color:var(--y)}
+.btn.sm{font-size:1rem;padding:6px 14px;box-shadow:3px 3px 0 var(--ink)}
+.btn.on{background:var(--ink);color:var(--y)}
+:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+#intro{width:100%}
+#s0{align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#ip{width:min(62vw,270px);animation:drop 1.2s both}
+@keyframes drop{0%{transform:translateY(-110vh) rotate(-40deg)}55%{transform:translateY(0) rotate(10deg) scaleY(.86)}72%{transform:translateY(-38px) rotate(-4deg)}88%{transform:translateY(0) rotate(2deg) scaleY(.95)}100%{transform:none}}
+#tt{font-family:"Lilita One",Impact,sans-serif;font-size:clamp(2.6rem,12vw,4.6rem);line-height:1;margin:18px 0 28px;text-transform:uppercase;-webkit-text-stroke:2px var(--ink);color:var(--w);text-shadow:4px 4px 0 var(--ink)}
+#tt span{display:inline-block;animation:pop .45s both}
+#tt .sp{width:.35em}
+@keyframes pop{0%{opacity:0;transform:translateY(40px) scale(.3) rotate(-12deg)}70%{transform:translateY(-8px) scale(1.15)}100%{opacity:1;transform:none}}
+#go{font-size:2rem;padding:16px 56px;animation:pop .6s 2.7s both,wig 1.6s 3.4s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(0)}10%{transform:rotate(-4deg)}20%{transform:rotate(4deg)}30%{transform:rotate(0)}}
+#pl{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.pr{display:flex;gap:10px;align-items:center;animation:pop .35s both}
+.pr input{flex:1;min-width:0;font:inherit;font-size:1.3rem;padding:12px 14px;border:3px solid var(--ink);border-radius:14px;background:var(--w);box-shadow:4px 4px 0 var(--ink)}
+.pr .x{width:44px;height:44px;padding:0;font-size:1.3rem;border-radius:50%}
+.add{align-self:center;width:64px;height:64px;border-radius:50%;padding:0;font-size:2.4rem;line-height:1}
+.hint{margin:6px 0 0;text-align:center}
+.seg{display:flex;gap:10px;margin:14px 0 4px}
+.seg .btn{flex:1;font-size:1.15rem;padding:10px 6px}
+#lvd{text-align:center;margin:6px 0 0;min-height:1.6em}
+#cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.cat{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 8px;font-size:1.25rem;text-align:center}
+.cat i{font-style:normal;font-size:2.3rem}
+.cat:last-child:nth-child(odd){grid-column:1/-1}
+.now{text-align:center;margin-top:6px}
+.now small{display:block;font-size:1.2rem}
+#who{display:inline-block;font-family:"Lilita One",sans-serif;font-size:clamp(2.2rem,10vw,3.4rem);background:var(--ink);color:var(--y);padding:2px 24px;border-radius:16px;margin-top:4px;max-width:100%;overflow-wrap:anywhere}
+#who.bump{animation:bump .35s}
+@keyframes bump{0%{transform:scale(.6) rotate(-5deg)}70%{transform:scale(1.1)}100%{transform:none}}
+#chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{border:3px solid var(--ink);border-radius:99px;padding:0 14px;font-size:1rem;opacity:.55}
+.chip.on{background:var(--w);opacity:1;box-shadow:3px 3px 0 var(--ink)}
+.stage{text-align:center}
+#pot{width:min(46vw,190px);display:inline-block;--sp:1s;--gl:6px;animation:shk var(--sp) ease-in-out infinite;filter:drop-shadow(0 0 var(--gl) var(--red))}
+@keyframes shk{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.07)}}
+.task{background:var(--w);border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink);padding:18px;text-align:center;margin:16px 0}
+.task small{font-size:1.05rem}
+#tk{font-family:"Lilita One",sans-serif;font-size:clamp(1.7rem,7vw,2.4rem);line-height:1.15;margin-top:4px}
+#pass{width:100%;font-size:1.8rem;padding:18px}
+.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}
+#boom{z-index:9;background:var(--red)}
+#set{z-index:40;background:rgba(26,26,26,.7)}
+.bx{background:var(--w);border:4px solid var(--ink);border-radius:24px;box-shadow:8px 8px 0 var(--ink);padding:22px;max-width:460px;width:100%;text-align:center;animation:bm .6s both;max-height:100%;overflow:auto}
+#set .bx{animation:bm .3s both;text-align:left}
+@keyframes bm{0%{transform:scale(.2) rotate(-14deg)}60%{transform:scale(1.1) rotate(3deg)}100%{transform:none}}
+.bx h2{font-size:4rem;color:var(--red);-webkit-text-stroke:2px var(--ink);line-height:1}
+.bx .big{font-size:4.5rem;line-height:1}
+.bx p{margin:6px 0;font-size:1.3rem}.bx p b{font-family:"Lilita One",sans-serif;font-weight:400;font-size:2rem;display:block}
+#lt{font-size:1.05rem!important}
+.sc{list-style:none;padding:0;margin:14px 0;text-align:left}
+.sc li{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:2px dashed var(--ink)}
+.row{display:flex;gap:12px;flex-wrap:wrap}.row .btn{flex:1;min-width:150px;font-size:1.2rem}
+.shake{animation:sk .5s}
+@keyframes sk{0%,100%{transform:none}20%{transform:translate(-10px,6px)}40%{transform:translate(10px,-6px)}60%{transform:translate(-8px,-4px)}80%{transform:translate(8px,4px)}}
+#gear{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:20;width:48px;height:48px;border-radius:50%;padding:0;font-size:1.4rem;box-shadow:3px 3px 0 var(--ink)}
+.tabs{display:flex;gap:10px;margin-bottom:14px}.tabs .btn{flex:1}
+.st-r{padding:10px 0;border-bottom:2px dashed var(--ink)}
+.st-r label,.st-r .lb{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:1.25rem;font-family:"Lilita One",sans-serif}
+.st-r input[type=range]{width:100%;accent-color:var(--red);margin-top:8px;height:28px}
+.ts{display:flex;gap:8px;margin-top:8px;align-items:flex-end}.ts .btn{flex:1;padding:4px 0;line-height:1.3}
+.cr{margin:0 0 14px}.cr div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:2px dashed var(--ink)}
+.cr dt{margin:0}.cr dd{margin:0;font-family:"Lilita One",sans-serif}
+#sx{width:100%;margin-top:12px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<button id="gear" class="btn" aria-label="Ustawienia i twórcy">⚙️</button>
+
+<main class="scr" id="s0">
+  <div id="ip"></div>
+  <div id="tt" aria-label="Gorący ziemniak"></div>
+  <button class="btn red" id="go">START</button>
+</main>
+
+<main class="scr hide" id="s1">
+  <div class="top"><h2>Kto gra?</h2></div>
+  <div id="pl"></div>
+  <button class="btn add green" id="add" aria-label="Dodaj gracza">+</button>
+  <p class="hint">Od 2 do 10 graczy</p>
+  <div style="flex:1"></div>
+  <button class="btn dark" id="ready" style="width:100%;margin-top:20px">Gotowe →</button>
+</main>
+
+<main class="scr hide" id="s2">
+  <div class="top"><button class="btn sm" id="b1">← Gracze</button></div>
+  <h2>Poziom i kategoria</h2>
+  <div class="seg" id="lv" role="group" aria-label="Poziom trudności"></div>
+  <p id="lvd"></p>
+  <div id="cg"></div>
+</main>
+
+<main class="scr hide" id="s3">
+  <div class="top"><button class="btn sm" id="b2">← Kategorie</button></div>
+  <div class="now"><small>Teraz odpowiada:</small><div id="who"></div></div>
+  <div id="chips"></div>
+  <div class="stage"><div id="pot"></div></div>
+  <div class="task"><small id="cn"></small><div id="tk"></div></div>
+  <button class="btn green" id="pass">Podaję dalej →</button>
+</main>
+
+<div id="boom" class="ov hide" role="dialog" aria-live="assertive">
+  <div class="bx">
+    <div class="big">💥</div>
+    <h2>BUM!</h2>
+    <p>Ziemniak wybuchł u:<b id="loser"></b></p>
+    <p id="lt"></p>
+    <ul class="sc" id="sc"></ul>
+    <div class="row">
+      <button class="btn green" id="again">Jeszcze raz</button>
+      <button class="btn" id="other">Inna kategoria</button>
+    </div>
+  </div>
+</div>
+
+<div id="set" class="ov hide" role="dialog" aria-modal="true" aria-label="Ustawienia">
+  <div class="bx">
+    <div class="tabs"><button class="btn sm on" data-t="t1">⚙️ Ustawienia</button><button class="btn sm" data-t="t2">🏆 Twórcy</button></div>
+    <div id="t1">
+      <div class="st-r"><div class="lb">Dźwięki gry <button class="btn sm" id="sn" aria-pressed="true"></button></div><input type="range" id="sv" min="0" max="100" aria-label="Głośność dźwięków"></div>
+      <div class="st-r"><div class="lb">Muzyka <button class="btn sm" id="mu" aria-pressed="true"></button></div><input type="range" id="mv" min="0" max="100" aria-label="Głośność muzyki"></div>
+      <div class="st-r" style="border:0"><div class="lb">Wielkość tekstu</div>
+        <div class="ts" id="ts"><button class="btn" data-s="0" style="font-size:.85rem">A</button><button class="btn" data-s="1" style="font-size:1.1rem">A</button><button class="btn" data-s="2" style="font-size:1.35rem">A</button><button class="btn" data-s="3" style="font-size:1.6rem">A</button></div></div>
+    </div>
+    <div id="t2" class="hide">
+      <dl class="cr">
+        <div><dt>Pomysł i scenariusz</dt><dd>Jan Marek</dd></div>
+        <div><dt>Projekt gry</dt><dd>Jan Marek</dd></div>
+        <div><dt>Programowanie</dt><dd>Jan Marek</dd></div>
+        <div><dt>Grafika i animacje</dt><dd>Jan Marek</dd></div>
+        <div><dt>Muzyka</dt><dd>Jan Marek</dd></div>
+        <div><dt>Efekty dźwiękowe</dt><dd>Jan Marek</dd></div>
+        <div><dt>Pytania i zadania</dt><dd>Jan Marek</dd></div>
+        <div><dt>Testy</dt><dd>Jan Marek</dd></div>
+        <div><dt>Reżyseria</dt><dd>Jan Marek</dd></div>
+        <div><dt>Ziemniak</dt><dd>Jan Marek</dd></div>
+      </dl>
+    </div>
+    <button class="btn green" id="sx">Gotowe</button>
+  </div>
+</div>
+
+<script>
+const POT='<svg viewBox="0 0 200 170" role="img" aria-label="Ziemniak"><path d="M30 95C20 50 70 15 115 22c50 6 78 40 70 80-8 42-55 58-100 52C45 148 38 125 30 95Z" fill="#d79a54" stroke="#1a1a1a" stroke-width="7" stroke-linejoin="round"/><circle cx="60" cy="55" r="5" fill="#a86f33"/><circle cx="152" cy="122" r="6" fill="#a86f33"/><circle cx="108" cy="44" r="4" fill="#a86f33"/><circle cx="82" cy="85" r="8" fill="#1a1a1a"/><circle cx="130" cy="80" r="8" fill="#1a1a1a"/><path d="M86 114q22 16 44 0" fill="none" stroke="#1a1a1a" stroke-width="7" stroke-linecap="round"/></svg>';
+/* Zadania: po „Wymień ” brzmią „…”. Każde ma kilkanaście+ dobrych odpowiedzi. [ikona, łatwe, średnie, trudne, litery do {L}] */
+const CATS={
+"Język polski":["📖","lektury szkolne|części mowy|znaki interpunkcyjne|polskich poetów|rzeczowniki na literę {L}","utwory Adama Mickiewicza|środki stylistyczne|gatunki literackie|epoki literackie|bohaterów „Pana Tadeusza”","utwory Henryka Sienkiewicza|postacie z „Lalki” Bolesława Prusa|utwory Juliusza Słowackiego|związki frazeologiczne z częściami ciała|polskie przysłowia o zwierzętach","ABKMPSTW"],
+"Geografia":["🌍","państwa Europy|miasta w Polsce|polskie rzeki|państwa na literę {L}","stolice państw|państwa Azji|państwa Afryki|polskie jeziora|góry i pasma górskie","stolice państw Europy|stolice państw Afryki|państwa bez dostępu do morza|wyspy świata|miasta w Polsce na literę {L}","BCGKMNPSTW"],
+"Celebryci":["⭐","polskich aktorów|polskich youtuberów|polskich piosenkarzy|znanych sportowców|znane osoby, których imię zaczyna się na {L}","aktorów z Hollywood|polskie piosenkarki|polskich raperów|polskich influencerów|światowe gwiazdy muzyki","polskich reżyserów|polskich komików|aktorów, którzy zdobyli Oscara|polskich prezenterów telewizyjnych|polskich modelki i modeli","AJKMPT"],
+"Film":["🎬","filmy animowane|filmy Disneya|komedie|horrory|filmy na literę {L}","filmy Marvela|polskie filmy|filmy z Leonardo DiCaprio|filmy z Tomem Cruisem|seriale","filmy Quentina Tarantino|filmy Stevena Spielberga|filmy Christophera Nolana|polskie seriale|filmy nagrodzone Oscarem dla najlepszego filmu","KMPSTW"],
+"Matma":["➗","figury geometryczne|bryły|jednostki długości|liczby pierwsze mniejsze od 50|kwadraty liczb","liczby podzielne przez 7|potęgi dwójki|liczby pierwsze mniejsze od 100|czworokąty i ich rodzaje|jednostki pola, objętości i masy","działy matematyki|twierdzenia i prawa matematyczne|funkcje matematyczne|wielkich matematyków|liczby ciągu Fibonacciego",""],
+"Jedzenie":["🍕","owoce|warzywa|słodycze|polskie potrawy|produkty na literę {L}","przyprawy i zioła|zupy|napoje|fast foody|rodzaje sera","dania kuchni włoskiej|dania kuchni azjatyckiej|polskie ciasta|wędliny|sosy","BKMPSTW"],
+"Zwierzęta":["🦁","zwierzęta domowe|zwierzęta na wsi|zwierzęta w zoo|ptaki|zwierzęta na literę {L}","zwierzęta morskie|owady|rasy psów|zwierzęta Afryki|zwierzęta żyjące w polskich lasach","rasy kotów|gady i płazy|zwierzęta Australii|zwierzęta zagrożone wyginięciem|zwierzęta na literę {L} (dziko żyjące)","BKMPSŻ"],
+"Sport":["⚽","dyscypliny sportowe|sporty zimowe|sporty z piłką|drużyny piłkarskie|piłkarzy","polskich sportowców|kluby piłkarskie z Europy|tenisistów|dyscypliny letnich igrzysk olimpijskich|sprzęt sportowy","konkurencje lekkoatletyczne|miasta, które były gospodarzami igrzysk olimpijskich|polskich medalistów olimpijskich|terminy z piłki nożnej|kluby polskiej Ekstraklasy",""],
+"Muzyka":["🎵","polskich piosenkarzy|instrumenty muzyczne|gatunki muzyczne|polskie zespoły|piosenki świąteczne","zagraniczne zespoły|instrumenty dęte|polskie piosenki z lat 90.|światowe hity|polskich raperów","kompozytorów muzyki klasycznej|instrumenty smyczkowe|terminy muzyczne|albumy znanych wykonawców|polskie festiwale muzyczne",""],
+"Gry":["🎮","gry komputerowe|gry planszowe|gry karciane|gry na telefon|postacie z bajek","rzeczy z Minecrafta|postacie z Nintendo|konsole do gier|gatunki gier|gry wieloosobowe online","postacie z Pokémonów|polskie gry komputerowe|firmy produkujące gry|gry z serii Zelda lub Mario|postacie z gier walki",""],
+"Historia":["🏰","polskich królów i książąt|święta w Polsce|wojny|wielkich Polaków|wynalazki","bitwy|odkrywców|starożytne cywilizacje|polskich bohaterów narodowych|wynalazców","prezydentów USA|cesarzy rzymskich|bitwy II wojny światowej|dynastie królewskie|polskie powstania",""]
+};
+const LV=["Łatwy","Średni","Trudny"],LI=["😊","😐","😈"],TM=[[20,25],[15,25],[10,20]];
+const LD=["Proste, ogólne zadania. Dużo czasu na wymyślenie odpowiedzi.","Węższe tematy. Trzeba się trochę postarać.","Konkretne zadania dla wprawionych. Bomba wybucha najszybciej."];
+const TS=[.875,1,1.15,1.3];
+const $=i=>document.getElementById(i);
+let S={snd:1,sv:.7,mus:1,mv:.4,ts:1,lv:1};
+try{Object.assign(S,JSON.parse(localStorage.getItem("gz")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("gz",JSON.stringify(S))}catch(e){}};
+let P=[],B=[],cur=0,cat="",run=false,tm=0,end=0,total=0,ac=null,sg=null,mg=null,n=0,left=0,wasRun=false,ms=0;
+const bags={};
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function show(id){document.querySelectorAll("main").forEach(m=>m.classList.toggle("hide",m.id!==id));window.scrollTo(0,0)}
+
+/* intro */
+$("ip").innerHTML=POT;
+$("tt").innerHTML="Gorący ziemniak".split("").map((c,i)=>c===" "?'<span class="sp"></span>':`<span style="animation-delay:${(1+i*.06).toFixed(2)}s">${c}</span>`).join("");
+
+/* ustawienia */
+function apply(){
+  document.documentElement.style.fontSize=TS[S.ts]*100+"%";
+  $("sn").textContent=S.snd?"WŁ.":"WYŁ.";$("sn").setAttribute("aria-pressed",S.snd);
+  $("mu").textContent=S.mus?"WŁ.":"WYŁ.";$("mu").setAttribute("aria-pressed",S.mus);
+  $("sv").value=S.sv*100;$("mv").value=S.mv*100;
+  document.querySelectorAll("#ts .btn").forEach(b=>b.classList.toggle("on",+b.dataset.s===S.ts));
+  document.querySelectorAll("#lv .btn").forEach(b=>b.classList.toggle("on",+b.dataset.l===S.lv));
+  $("lvd").textContent=LD[S.lv];
+  if(sg)sg.gain.value=S.snd?S.sv:0;
+  if(mg)mg.gain.value=S.mus?S.mv*.5:0;
+}
+$("sn").onclick=()=>{S.snd=+!S.snd;save();apply();audio();beep(700,.1,"square",.2)};
+$("mu").onclick=()=>{S.mus=+!S.mus;save();apply();audio()};
+$("sv").oninput=e=>{S.sv=e.target.value/100;save();apply()};
+$("sv").onchange=()=>{audio();beep(700,.1,"square",.2)};
+$("mv").oninput=e=>{S.mv=e.target.value/100;save();apply();audio()};
+$("ts").onclick=e=>{const b=e.target.closest(".btn");if(b){S.ts=+b.dataset.s;save();apply()}};
+document.querySelectorAll(".tabs .btn").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs .btn").forEach(x=>x.classList.toggle("on",x===b));
+  $("t1").classList.toggle("hide",b.dataset.t!=="t1");$("t2").classList.toggle("hide",b.dataset.t!=="t2");
+});
+function openSet(){
+  audio();wasRun=run;
+  if(run){left=end-performance.now();run=false;clearTimeout(tm)}
+  $("set").classList.remove("hide");$("sx").focus();
+}
+function closeSet(){
+  $("set").classList.add("hide");
+  if(wasRun){wasRun=false;end=performance.now()+left;run=true;loop()}
+}
+$("gear").onclick=openSet;$("sx").onclick=closeSet;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("set").classList.contains("hide"))closeSet()});
+
+/* dźwięk i muzyka */
+function audio(){
+  if(!ac){try{
+    ac=new(window.AudioContext||window.webkitAudioContext)();
+    sg=ac.createGain();mg=ac.createGain();sg.connect(ac.destination);mg.connect(ac.destination);apply();
+    setInterval(music,200);
+  }catch(e){}}
+  if(ac&&ac.state==="suspended")ac.resume();
+}
+function tone(dest,f,d,t,v,at){
+  const o=ac.createOscillator(),g=ac.createGain(),s=at||ac.currentTime;
+  o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);
+  o.connect(g);g.connect(dest);o.start(s);o.stop(s+d);
+}
+const beep=(f,d,t,v)=>{if(ac&&S.snd)tone(sg,f,d,t,v)};
+const BASS=[110,0,110,0,165,0,110,0,131,0,131,0,147,0,165,0];
+const LEAD=[440,0,523,0,659,0,523,0,587,0,698,0,659,523,440,0];
+function music(){
+  if(!ac||!S.mus||document.hidden||!$("set").classList.contains("hide")||!$("boom").classList.contains("hide"))return;
+  const i=ms++%16;
+  if(BASS[i])tone(mg,BASS[i],.3,"triangle",.5);
+  if(LEAD[i])tone(mg,LEAD[i],.16,"square",.12);
+  if(i%4===0)tone(mg,70,.12,"sine",.6);
+}
+function explode(){
+  if(!S.snd||!ac)return;const t=ac.currentTime,L=ac.sampleRate*1.8,b=ac.createBuffer(1,L,ac.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,2);
+  const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter();f.type="lowpass";
+  f.frequency.setValueAtTime(5000,t);f.frequency.exponentialRampToValueAtTime(80,t+1.5);
+  const g=ac.createGain();g.gain.value=1.3;s.connect(f);f.connect(g);g.connect(sg);s.start(t);
+  const o=ac.createOscillator(),og=ac.createGain();o.type="sine";o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(28,t+.9);
+  og.gain.setValueAtTime(1.2,t);og.gain.exponentialRampToValueAtTime(.001,t+1);o.connect(og);og.connect(sg);o.start(t);o.stop(t+1);
+}
+
+/* gracze */
+function addRow(v){
+  const k=$("pl").children.length+1;if(k>10)return;
+  const r=document.createElement("div");r.className="pr";
+  r.innerHTML=`<input maxlength="16" placeholder="Gracz ${k}" aria-label="Imię gracza ${k}" value="${esc(v||"")}"><button class="btn x" aria-label="Usuń gracza">✕</button>`;
+  r.querySelector("button").onclick=()=>{if($("pl").children.length>2){r.remove();renum()}};
+  r.querySelector("input").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();addRow();$("pl").lastChild.querySelector("input").focus()}};
+  $("pl").appendChild(r);
+}
+function renum(){[...$("pl").children].forEach((r,i)=>{r.querySelector("input").placeholder="Gracz "+(i+1)})}
+$("add").onclick=()=>{addRow();$("pl").lastChild.querySelector("input").focus()};
+addRow();addRow();
+$("go").onclick=()=>{audio();beep(600,.12,"square",.15);show("s1")};
+$("ready").onclick=()=>{
+  P=[...$("pl").querySelectorAll("input")].map((x,i)=>x.value.trim()||"Gracz "+(i+1));
+  B=P.map(()=>0);show("s2");
+};
+$("b1").onclick=()=>show("s1");
+
+/* poziom i kategorie */
+$("lv").innerHTML=LV.map((l,i)=>`<button class="btn" data-l="${i}">${LI[i]} ${l}</button>`).join("");
+$("lv").onclick=e=>{const b=e.target.closest(".btn");if(b){S.lv=+b.dataset.l;save();apply();audio();beep(500+S.lv*150,.08,"triangle",.25)}};
+$("cg").innerHTML=Object.keys(CATS).map(k=>`<button class="btn cat" data-k="${k}"><i>${CATS[k][0]}</i>${k}</button>`).join("");
+$("cg").onclick=e=>{const b=e.target.closest(".cat");if(b){audio();cat=b.dataset.k;cur=Math.floor(Math.random()*P.length);show("s3");round()}};
+apply();
+
+/* gra */
+function task(){
+  const k=cat+S.lv;
+  if(!bags[k]||!bags[k].length)bags[k]=CATS[cat][1+S.lv].split("|").sort(()=>Math.random()-.5);
+  const L=[...CATS[cat][4]];
+  return "Wymień "+bags[k].pop().replace("{L}",()=>rnd(L));
+}
+function draw(){
+  $("who").textContent=P[cur];$("who").classList.remove("bump");void $("who").offsetWidth;$("who").classList.add("bump");
+  $("chips").innerHTML=P.map((p,i)=>`<span class="chip lil${i===cur?" on":""}">${esc(p)}</span>`).join("");
+}
+function round(){
+  $("boom").classList.add("hide");$("s3").classList.remove("shake");
+  $("cn").textContent=CATS[cat][0]+" "+cat+" ("+LV[S.lv].toLowerCase()+")";
+  $("tk").textContent=task();$("pot").innerHTML=POT;
+  const[a,b]=TM[S.lv];total=(a+Math.random()*b)*1000;end=performance.now()+total;run=true;n=0;
+  draw();clearTimeout(tm);loop();
+}
+function loop(){
+  if(!run)return;
+  const l=end-performance.now();
+  if(l<=0){boom();return}
+  const fr=Math.min(1,l/total);n++;
+  beep(n%2?1500:1050,.05,"square",.12);
+  $("pot").style.setProperty("--sp",(.2+fr*.9).toFixed(2)+"s");
+  $("pot").style.setProperty("--gl",(6+(1-fr)*50).toFixed(0)+"px");
+  tm=setTimeout(loop,140+fr*760);
+}
+$("pass").onclick=()=>{if(!run)return;beep(500,.08,"triangle",.25);cur=(cur+1)%P.length;draw()};
+function boom(){
+  run=false;clearTimeout(tm);B[cur]++;explode();
+  $("s3").classList.add("shake");
+  $("loser").textContent=P[cur];
+  $("lt").textContent=$("tk").textContent+"…";
+  $("sc").innerHTML=P.map((p,i)=>`<li><span>${esc(p)}</span><span>💥 ${B[i]}</span></li>`).join("");
+  $("boom").classList.remove("hide");$("again").focus();
+}
+function leave(){run=false;clearTimeout(tm);$("boom").classList.add("hide");show("s2")}
+$("again").onclick=()=>{audio();round()};
+$("other").onclick=leave;$("b2").onclick=leave;
+</script>
+</body>
+</html>
